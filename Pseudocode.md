@@ -8,7 +8,7 @@ input
 output
     deduplicated sam
 
-
+```
 setup
   load STL96.txt to set umi_set
   open input sam for reading
@@ -51,3 +51,4 @@ Keep or discard duplicates
 
 close in and out files
 
+```
