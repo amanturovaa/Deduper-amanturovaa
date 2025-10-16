@@ -1,6 +1,6 @@
-Process sorted SAM file, which contains uniquely mapped single end reads, and remove PCR duplicated
-PCR duplicated contain the same RNAME, POS, FLAG, and UMI
-Keep the first unique read encountered and remove any subsequent reads.
+1. Process sorted SAM file, which contains uniquely mapped single end reads, and remove PCR duplicated
+2. PCR duplicated contain the same RNAME, POS, FLAG, and UMI
+3. Keep the first unique read encountered and remove any subsequent reads.
 
 input
     sam file 
