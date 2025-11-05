@@ -24,17 +24,13 @@ def five_prime_pos_funct(lmp:int, cigar:str, strand:str) -> int:
            return lmp
 
     elif strand == "-":
-
     # need to calculate the end position of reverse strand read
-        cigar_parts = re.findall(r'(\d+)([MIDNSHP=X])', cigar)
+        cigar_parts = re.findall(r'(\d+)([MDNS])', cigar)
         total_length = 0
 
         for length_str, cigar_code in cigar_parts: 
-            if cigar_code in ('M', 'D', 'N', '=', 'X'): # consumes reference
+            if cigar_code in ('M', 'D', 'N', 'S'):  # consumes reference
                 total_length += int(length_str) 
-
-            elif cigar_code == 'S' and cigar.endswith(length_str + 'S'): #check soft clipping at end of cigar
-                total_length += int(length_str)
 
         return lmp + total_length - 1  #subtract 1 to get 5' position since lmp is inclusive
 
@@ -102,7 +98,7 @@ if __name__ == "__main__":
             if pos == 0 or cigar == '*': 
                 continue
                 
-            strand = "-" if (flag & reverse_strand_flag) else "+" #determine strand, if true then reverse strand is "-", otherwise "+"
+            strand = "-" if (flag & reverse_strand_flag) else "+" #determine strand, if true then strand is "-", otherwise "+"
 
             five_prime_pos = five_prime_pos_funct(pos, cigar, strand) #get 5' position
 
