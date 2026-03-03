@@ -15,26 +15,26 @@ def five_prime_pos_funct(lmp:int, cigar:str, strand:str) -> int:
     if cigar == '*' or lmp == 0: 
         return 0
 
-    if strand == "+": # account for soft clipping at start of + strand
-       length = re.match(r"^([0-9]+)S", cigar)
-       if length:
-           soft_clip_length = int(length.group(1))
-           return lmp - soft_clip_length
-       else:
-           return lmp
+    if strand == "+":
+        m = re.match(r"^(\d+)S", cigar) #check for leading soft clipping, if it exists then subtract the soft clipping from the leftmost position to get the 5' position
+        if m:
+            return lmp - int(m.group(1)) 
+        return lmp
 
-    elif strand == "-":
-    # need to calculate the end position of reverse strand read
-        cigar_parts = re.findall(r'(\d+)([MDNS])', cigar)
-        total_length = 0
+    if strand == "-": #for reverse strand, we need to calculate the rightmost position, which is the leftmost position + the length of the alignment 
+        cigar_parts = re.findall(r"(\d+)([MIDNSHP=X])", cigar) 
+        ref_len = 0
+        for length_str, op in cigar_parts:
+            if op in ("M", "D", "N", "=", "X"): #consumes reference
+                ref_len += int(length_str)
+        trailing_soft = 0
+        m_end = re.search(r"(\d+)S$", cigar) 
+        if m_end:
+            trailing_soft = int(m_end.group(1))
+        return lmp + ref_len + trailing_soft
+    return 0
 
-        for length_str, cigar_code in cigar_parts: 
-            if cigar_code in ('M', 'D', 'N', 'S'):  # consumes reference
-                total_length += int(length_str) 
 
-        return lmp + total_length - 1  #subtract 1 to get 5' position since lmp is inclusive
-
-    return 0  #return 0 if strand is not recognized
 
 if __name__ == "__main__":
 
