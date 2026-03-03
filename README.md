@@ -1,34 +1,16 @@
 # Deduper
-
-## Part 1
-Use this repo template to create your own Deduper repo - you should do all your work in your own repository. Please name it `Deduper-<github-user-name>`.
-
-Write up a strategy for writing a Reference Based PCR Duplicate Removal tool. That is, given a sorted sam file of uniquely mapped reads, remove all PCR duplicates (retain only a single copy of each read). Develop a strategy that avoids loading everything into memory. You should not write any code for this portion of the assignment. Be sure to:
-- Define the problem
-- Write examples:
-    - Include a properly formated sorted input sam file
-    - Include a properly formated expected output sam file
-- Develop your algorithm using pseudocode
-- Determine high level functions
-    - Description
-    - Function headers
-    - Test examples (for individual functions)
-    - Return statement
-
-
+This script (along with a sorted sam and a text file containing the known UMIs) remove all PCR duplicates, while retaining only a single copy of each read, from a sorted SAM file of uniquely mapped reads.
     
-For this portion of the assignment, you should design your algorithm for single-end data, with 96 UMIs. UMI information will be in the QNAME, like so: ```NS500451:154:HWKTMBGXX:1:11101:15364:1139:GAACAGGT```. Discard any UMIs with errors (or think about how you might error correct, if you're feeling ambitious).
+    `samtools sort` needs to be use outside of the python script
+    Python 3.12 compatible code
 
-## Part 2
-An important part of writing code is reviewing code - both your own and other's. In this portion of the assignment, you will be assigned 3 students' pseudocode algorithms to review. Be sure to evaluate the following points:
-- Does the proposed algorithm make sense to you? Can you follow the logic?
-- Does the algorithm do everything it's supposed to do? (see part 1)
-- Are proposed functions reasonable? Are they "standalone" pieces of code?
-
-
-## Part 3
+## Usage
 Example of how to run script:
 python3 deduper.py -f input_file.sam -o output_file.sam -u umi_file.txt
+    - ```-f```, ```--file```: designates absolute file path to sorted sam file
+    - ```-o```, ```--outfile```: designates absolute file path to deduplicated sam file
+    - ```-u```, ```--umi```: designates file containing the list of UMIs
+
 
 Example Input of a sorted SAM:
 ```
@@ -48,8 +30,8 @@ NS500451:154:HWKTMBGXX:4:23611:17006:5432:GAGAAGTC      0       17      56414979
 ```
 
 
-Given a SAM file of uniquely mapped reads, and a text file containing the known UMIs, remove all PCR duplicates (retain only a single copy of each read). Remember:
-- Your Python code can assume a sorted sam file (you *might* need to use `samtools sort` outside of your Python script)
+
+
 - Account for: 
     - all possible CIGAR strings (including adjusting for soft clipping, etc.)
     - Strand
@@ -65,17 +47,3 @@ Given a SAM file of uniquely mapped reads, and a text file containing the known 
     - Error correction of known UMIs
     - Choice of duplicate written to file
     
-You MUST:
-- Write Python 3.12 compatible code
-- Include the following argparse options
-    - ```-f```, ```--file```: designates absolute file path to sorted sam file
-    - ```-o```, ```--outfile```: designates absolute file path to deduplicated sam file
-    - ```-u```, ```--umi```: designates file containing the list of UMIs
-    - ```-h```, ```--help```: prints a USEFUL help message (see argparse docs)
-        - That is, your code must be able to run (in a single step) if given a command in the format:
-          ```
-          ./<your_last_name>_deduper.py -u STL96.txt -f <in.sam> -o <out.sam>
-          ```
-- Output the first read encountered if duplicates are found
-
-
