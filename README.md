@@ -14,6 +14,8 @@ Write up a strategy for writing a Reference Based PCR Duplicate Removal tool. Th
     - Function headers
     - Test examples (for individual functions)
     - Return statement
+
+
     
 For this portion of the assignment, you should design your algorithm for single-end data, with 96 UMIs. UMI information will be in the QNAME, like so: ```NS500451:154:HWKTMBGXX:1:11101:15364:1139:GAACAGGT```. Discard any UMIs with errors (or think about how you might error correct, if you're feeling ambitious).
 
@@ -23,14 +25,27 @@ An important part of writing code is reviewing code - both your own and other's.
 - Does the algorithm do everything it's supposed to do? (see part 1)
 - Are proposed functions reasonable? Are they "standalone" pieces of code?
 
-You can find your assigned reviewees on Canvas. You can find your fellow students' repositories at 
-```
-github.com/<user>/Deduper-<github-user-name>
-```
-Be sure to leave comments on their repositories by creating issues or by commenting on the pull request.
 
 ## Part 3
-Write your deduper function!
+Example of how to run script:
+python3 deduper.py -f input_file.sam -o output_file.sam -u umi_file.txt
+
+Example Input of a sorted SAM:
+@HD     VN:1.4
+@SQ     SN:1    LN:195154279
+NS500451:154:HWKTMBGXX:4:23611:3821:5431:ATCGAACC       0       19      5848248 255     1S71M   *       0       0       ACCTGCCTTAAA
+NS500451:154:HWKTMBGXX:4:23611:3821:5431:ATCGAACC       0       19      5848248 255     1S71M   *       0       0       ACCTGCCTTAAA
+NS500451:154:HWKTMBGXX:4:23611:17006:5432:GAGAAGTC      0       17      56414979        255     1S71M   *       0       0       TCCCCGCTCTTCC
+
+
+Output:
+@HD     VN:1.4
+@SQ     SN:1    LN:195154279
+NS500451:154:HWKTMBGXX:4:23611:3821:5431:ATCGAACC       0       19      5848248 255     1S71M   *       0       0       ACCTGCCTTAAA
+NS500451:154:HWKTMBGXX:4:23611:17006:5432:GAGAAGTC      0       17      56414979        255     1S71M   *       0       0       TCCCCGCTCTTCC
+
+
+
 
 Given a SAM file of uniquely mapped reads, and a text file containing the known UMIs, remove all PCR duplicates (retain only a single copy of each read). Remember:
 - Your Python code can assume a sorted sam file (you *might* need to use `samtools sort` outside of your Python script)
@@ -61,6 +76,5 @@ You MUST:
           ./<your_last_name>_deduper.py -u STL96.txt -f <in.sam> -o <out.sam>
           ```
 - Output the first read encountered if duplicates are found
-- Output a properly formatted SAM file
-- Name your python script ```<your_last_name>_deduper.py``` and place it in the top level of your repo (that is, not inside a folder)
+
 
