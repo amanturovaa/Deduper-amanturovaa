@@ -31,20 +31,21 @@ Example of how to run script:
 python3 deduper.py -f input_file.sam -o output_file.sam -u umi_file.txt
 
 Example Input of a sorted SAM:
+```
 @HD     VN:1.4
 @SQ     SN:1    LN:195154279
 NS500451:154:HWKTMBGXX:4:23611:3821:5431:ATCGAACC       0       19      5848248 255     1S71M   *       0       0       ACCTGCCTTAAA
 NS500451:154:HWKTMBGXX:4:23611:3821:5431:ATCGAACC       0       19      5848248 255     1S71M   *       0       0       ACCTGCCTTAAA
 NS500451:154:HWKTMBGXX:4:23611:17006:5432:GAGAAGTC      0       17      56414979        255     1S71M   *       0       0       TCCCCGCTCTTCC
-
+```
 
 Output:
+```
 @HD     VN:1.4
 @SQ     SN:1    LN:195154279
 NS500451:154:HWKTMBGXX:4:23611:3821:5431:ATCGAACC       0       19      5848248 255     1S71M   *       0       0       ACCTGCCTTAAA
 NS500451:154:HWKTMBGXX:4:23611:17006:5432:GAGAAGTC      0       17      56414979        255     1S71M   *       0       0       TCCCCGCTCTTCC
-
-
+```
 
 
 Given a SAM file of uniquely mapped reads, and a text file containing the known UMIs, remove all PCR duplicates (retain only a single copy of each read). Remember:
