@@ -6,16 +6,16 @@ This script (along with a sorted sam and a text file containing the known UMIs) 
 
 
 ## Usage
-UMI text file should have all known UMIS with one UMI per line 
+- UMI text file should have all known UMIS with one UMI per line 
 
-sam files need to be sorted (chromosome tracking is reset when chromosome change is detected)
+- sam files need to be sorted (chromosome tracking is reset when chromosome change is detected)
 
-Files should not be gzipped
+- Files should not be gzipped
 
-Script accounts of soft clipping and only single-end reads
+- Script accounts of soft clipping and only single-end reads
 
 
-Example of how to run script:
+### Example of how to run script:
 
 python3 deduper.py -f input_file.sam -o output_file.sam -u umi_file.txt
 
@@ -27,7 +27,7 @@ python3 deduper.py -f input_file.sam -o output_file.sam -u umi_file.txt
 
 
 
-Example Input of a sorted SAM:
+#### Example Input of a sorted SAM:
 ```
 @HD     VN:1.4
 @SQ     SN:1    LN:195154279
@@ -36,7 +36,7 @@ NS500451:154:HWKTMBGXX:4:23611:3821:5431:ATCGAACC       0       19      5848248 
 NS500451:154:HWKTMBGXX:4:23611:17006:5432:GAGAAGTC      0       17      56414979        255     1S71M   *       0       0       TCCCCGCTCTTCC
 ```
 
-Output:
+#### Output:
 ```
 @HD     VN:1.4
 @SQ     SN:1    LN:195154279
